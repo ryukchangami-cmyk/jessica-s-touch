@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, Phone, Video, Send, ShieldCheck, X } from "lucide-react";
 import jessicaAsset from "@/assets/jessica.jpeg.asset.json";
+import chatBgAsset from "@/assets/chat-bg.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,21 +50,13 @@ function parseBuy(text: string) {
 }
 
 function ChatPage() {
-  const [messages, setMessages] = useState<Msg[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [messages, setMessages] = useState<Msg[]>([]);
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) setMessages(JSON.parse(raw));
     } catch {}
-    return [
-      {
-        id: uid(),
-        role: "assistant",
-        content: "hola, soy Jessica. ¿en qué puedo ayudarte?",
-        time: now(),
-      },
-    ];
-  });
+  }, []);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -127,39 +120,29 @@ function ChatPage() {
         }),
       });
       const data = (await res.json()) as { reply?: string };
-      const reply = (data.reply || "…").trim();
+      const reply = (data.reply || "").trim();
+
+      if (!reply) {
+        // silencio absoluto si hay problema
+        setTyping(false);
+        return;
+      }
 
       if (reply.includes("[[BLOCK]]")) {
         const until = Date.now() + 24 * 60 * 60 * 1000;
         localStorage.setItem(BLOCK_KEY, String(until));
         setBlockedUntil(until);
-        setMessages((m) => [
-          ...m,
-          {
-            id: uid(),
-            role: "assistant",
-            content:
-              "te avisé. el chat queda bloqueado por 24 horas. si vuelves a hacerlo, será otro bloqueo.",
-            time: now(),
-          },
-        ]);
       } else {
         const { clean, buy } = parseBuy(reply);
-        setMessages((m) => [
-          ...m,
-          { id: uid(), role: "assistant", content: clean, buy, time: now() },
-        ]);
+        if (clean) {
+          setMessages((m) => [
+            ...m,
+            { id: uid(), role: "assistant", content: clean, buy, time: now() },
+          ]);
+        }
       }
     } catch {
-      setMessages((m) => [
-        ...m,
-        {
-          id: uid(),
-          role: "assistant",
-          content: "tuve un problema de conexión, intenta de nuevo en un momento.",
-          time: now(),
-        },
-      ]);
+      // silencio absoluto
     } finally {
       setTyping(false);
     }
@@ -219,7 +202,17 @@ function ChatPage() {
       </header>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain px-3 py-3">
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto overscroll-contain px-3 py-3"
+        style={{
+          backgroundImage: `url(${chatBgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "local",
+        }}
+      >
         <div className="mx-auto flex max-w-2xl flex-col gap-1.5">
           {messages.map((m, i) => {
             const prev = messages[i - 1];
