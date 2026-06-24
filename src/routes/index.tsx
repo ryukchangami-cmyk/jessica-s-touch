@@ -64,10 +64,13 @@ function ChatPage() {
   const [typing, setTyping] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showVerified, setShowVerified] = useState(false);
-  const [blockedUntil, setBlockedUntil] = useState<number>(() => {
-    if (typeof window === "undefined") return 0;
-    return Number(localStorage.getItem(BLOCK_KEY) || 0);
-  });
+  const [blockedUntil, setBlockedUntil] = useState<number>(0);
+  useEffect(() => {
+    try {
+      const v = Number(localStorage.getItem(BLOCK_KEY) || 0);
+      if (v) setBlockedUntil(v);
+    } catch {}
+  }, []);
   const [, force] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
