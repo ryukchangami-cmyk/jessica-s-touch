@@ -216,14 +216,7 @@ function ChatPage() {
       {/* Messages */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto overscroll-contain px-3 py-3"
-        style={{
-          backgroundImage: `url(${chatBgAsset.url})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "local",
-        }}
+        className="relative z-10 flex-1 overflow-y-auto overscroll-contain scroll-smooth px-3 py-3"
       >
         <div className="mx-auto flex max-w-2xl flex-col gap-1.5">
           {messages.map((m, i) => {
