@@ -7,8 +7,8 @@ import chatBgAsset from "@/assets/chat-bg.jpeg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Jessica Herrera ✓ — Verified Seller Elite" },
-      { name: "description", content: "Soporte premium, ventas autorizadas y atención 24/7 con Jessica Herrera." },
+      { title: "Elizabeth Jasmine ✓ — Verified Seller Elite" },
+      { name: "description", content: "Soporte premium, ventas autorizadas y atención 24/7 con Elizabeth Jasmine." },
     ],
   }),
   component: ChatPage,
