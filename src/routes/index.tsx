@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, Phone, Video, Send, ShieldCheck, X } from "lucide-react";
-import jessicaAsset from "@/assets/elizabeth.jpeg.asset.json";
-import chatBgAsset from "@/assets/chat-bg.jpeg.asset.json";
+import elizabethImg from "@/assets/elizabeth.jpeg";
+import chatBgImg from "@/assets/chat-bg.jpeg";
+
+const jessicaAsset = { url: elizabethImg };
+const chatBgAsset = { url: chatBgImg };
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -61,10 +64,13 @@ function ChatPage() {
   const [typing, setTyping] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showVerified, setShowVerified] = useState(false);
-  const [blockedUntil, setBlockedUntil] = useState<number>(() => {
-    if (typeof window === "undefined") return 0;
-    return Number(localStorage.getItem(BLOCK_KEY) || 0);
-  });
+  const [blockedUntil, setBlockedUntil] = useState<number>(0);
+  useEffect(() => {
+    try {
+      const v = Number(localStorage.getItem(BLOCK_KEY) || 0);
+      if (v) setBlockedUntil(v);
+    } catch {}
+  }, []);
   const [, force] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
