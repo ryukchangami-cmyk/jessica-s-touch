@@ -182,12 +182,12 @@ function ChatPage() {
           className="flex flex-1 items-center gap-3 text-left active:opacity-70"
         >
           <div className="avatar-ring h-10 w-10 overflow-hidden rounded-full">
-            <img src={jessicaAsset.url} alt="Jessica" className="h-full w-full object-cover" />
+            <img src={jessicaAsset.url} alt="Elizabeth" className="h-full w-full object-cover" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
               <span className="truncate text-[15px] font-semibold tracking-tight">
-                Jessica Herrera
+                Elizabeth Jasmine
               </span>
               <button
                 onClick={(e) => {
@@ -319,10 +319,10 @@ function ChatPage() {
             <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-white/20" />
             <div className="flex flex-col items-center text-center">
               <div className="avatar-ring h-24 w-24 overflow-hidden rounded-full">
-                <img src={jessicaAsset.url} alt="Jessica" className="h-full w-full object-cover" />
+                <img src={jessicaAsset.url} alt="Elizabeth" className="h-full w-full object-cover" />
               </div>
               <div className="mt-4 flex items-center gap-2">
-                <h2 className="text-xl font-semibold tracking-tight">Jessica Herrera</h2>
+                <h2 className="text-xl font-semibold tracking-tight">Elizabeth Jasmine</h2>
                 <div className="verified-shield flex h-5 w-5 items-center justify-center rounded-[6px]">
                   <ShieldCheck className="h-3 w-3 text-white" strokeWidth={3} />
                 </div>
