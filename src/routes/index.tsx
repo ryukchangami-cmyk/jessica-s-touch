@@ -50,21 +50,13 @@ function parseBuy(text: string) {
 }
 
 function ChatPage() {
-  const [messages, setMessages] = useState<Msg[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [messages, setMessages] = useState<Msg[]>([]);
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) setMessages(JSON.parse(raw));
     } catch {}
-    return [
-      {
-        id: uid(),
-        role: "assistant",
-        content: "hola, soy Jessica. ¿en qué puedo ayudarte?",
-        time: now(),
-      },
-    ];
-  });
+  }, []);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
