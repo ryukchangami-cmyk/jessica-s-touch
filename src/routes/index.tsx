@@ -150,7 +150,7 @@ function ChatPage() {
 
   function handleBuy(buy: NonNullable<Msg["buy"]>) {
     const msg =
-      `Hola Jessica, quiero comprar un panel.\n` +
+      `Hola Elizabeth, quiero comprar un panel.\n` +
       `Método: ${buy.metodo}\n` +
       `Producto: ${buy.producto}\n` +
       `Plan: ${buy.plan}`;
