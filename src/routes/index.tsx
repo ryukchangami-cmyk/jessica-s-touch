@@ -159,7 +159,19 @@ function ChatPage() {
   }
 
   return (
-    <main className="flex h-[100dvh] w-full flex-col overflow-hidden">
+    <main className="relative flex h-[100dvh] w-full flex-col overflow-hidden">
+      {/* Fixed background — never scrolls */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-0"
+        style={{
+          backgroundImage: `url(${chatBgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-0 bg-black/20" />
       {/* Header */}
       <header className="glass-strong z-20 flex items-center gap-3 px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
         <button className="p-1 -ml-1 opacity-80 active:opacity-50" aria-label="Atrás">
