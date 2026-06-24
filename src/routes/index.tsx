@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, Phone, Video, Send, ShieldCheck, X } from "lucide-react";
 import jessicaAsset from "@/assets/jessica.jpeg.asset.json";
+import chatBgAsset from "@/assets/chat-bg.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
