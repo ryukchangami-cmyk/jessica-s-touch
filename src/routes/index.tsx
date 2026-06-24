@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, Phone, Video, Send, ShieldCheck, X } from "lucide-react";
-import jessicaAsset from "@/assets/jessica.jpeg.asset.json";
+import jessicaAsset from "@/assets/elizabeth.jpeg.asset.json";
 import chatBgAsset from "@/assets/chat-bg.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Jessica Herrera ✓ — Verified Seller Elite" },
-      { name: "description", content: "Soporte premium, ventas autorizadas y atención 24/7 con Jessica Herrera." },
+      { title: "Elizabeth Jasmine ✓ — Verified Seller Elite" },
+      { name: "description", content: "Soporte premium, ventas autorizadas y atención 24/7 con Elizabeth Jasmine." },
     ],
   }),
   component: ChatPage,
@@ -150,7 +150,7 @@ function ChatPage() {
 
   function handleBuy(buy: NonNullable<Msg["buy"]>) {
     const msg =
-      `Hola Jessica, quiero comprar un panel.\n` +
+      `Hola Elizabeth, quiero comprar un panel.\n` +
       `Método: ${buy.metodo}\n` +
       `Producto: ${buy.producto}\n` +
       `Plan: ${buy.plan}`;
@@ -159,7 +159,19 @@ function ChatPage() {
   }
 
   return (
-    <main className="flex h-[100dvh] w-full flex-col overflow-hidden">
+    <main className="relative flex h-[100dvh] w-full flex-col overflow-hidden">
+      {/* Fixed background — never scrolls */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-0"
+        style={{
+          backgroundImage: `url(${chatBgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-0 bg-black/20" />
       {/* Header */}
       <header className="glass-strong z-20 flex items-center gap-3 px-4 pt-[max(env(safe-area-inset-top),12px)] pb-3">
         <button className="p-1 -ml-1 opacity-80 active:opacity-50" aria-label="Atrás">
@@ -170,12 +182,12 @@ function ChatPage() {
           className="flex flex-1 items-center gap-3 text-left active:opacity-70"
         >
           <div className="avatar-ring h-10 w-10 overflow-hidden rounded-full">
-            <img src={jessicaAsset.url} alt="Jessica" className="h-full w-full object-cover" />
+            <img src={jessicaAsset.url} alt="Elizabeth" className="h-full w-full object-cover" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
               <span className="truncate text-[15px] font-semibold tracking-tight">
-                Jessica Herrera
+                Elizabeth Jasmine
               </span>
               <button
                 onClick={(e) => {
@@ -204,14 +216,7 @@ function ChatPage() {
       {/* Messages */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto overscroll-contain px-3 py-3"
-        style={{
-          backgroundImage: `url(${chatBgAsset.url})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "local",
-        }}
+        className="relative z-10 flex-1 overflow-y-auto overscroll-contain scroll-smooth px-3 py-3"
       >
         <div className="mx-auto flex max-w-2xl flex-col gap-1.5">
           {messages.map((m, i) => {
@@ -314,10 +319,10 @@ function ChatPage() {
             <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-white/20" />
             <div className="flex flex-col items-center text-center">
               <div className="avatar-ring h-24 w-24 overflow-hidden rounded-full">
-                <img src={jessicaAsset.url} alt="Jessica" className="h-full w-full object-cover" />
+                <img src={jessicaAsset.url} alt="Elizabeth" className="h-full w-full object-cover" />
               </div>
               <div className="mt-4 flex items-center gap-2">
-                <h2 className="text-xl font-semibold tracking-tight">Jessica Herrera</h2>
+                <h2 className="text-xl font-semibold tracking-tight">Elizabeth Jasmine</h2>
                 <div className="verified-shield flex h-5 w-5 items-center justify-center rounded-[6px]">
                   <ShieldCheck className="h-3 w-3 text-white" strokeWidth={3} />
                 </div>
