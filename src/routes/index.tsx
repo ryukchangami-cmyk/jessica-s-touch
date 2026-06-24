@@ -120,39 +120,29 @@ function ChatPage() {
         }),
       });
       const data = (await res.json()) as { reply?: string };
-      const reply = (data.reply || "…").trim();
+      const reply = (data.reply || "").trim();
+
+      if (!reply) {
+        // silencio absoluto si hay problema
+        setTyping(false);
+        return;
+      }
 
       if (reply.includes("[[BLOCK]]")) {
         const until = Date.now() + 24 * 60 * 60 * 1000;
         localStorage.setItem(BLOCK_KEY, String(until));
         setBlockedUntil(until);
-        setMessages((m) => [
-          ...m,
-          {
-            id: uid(),
-            role: "assistant",
-            content:
-              "te avisé. el chat queda bloqueado por 24 horas. si vuelves a hacerlo, será otro bloqueo.",
-            time: now(),
-          },
-        ]);
       } else {
         const { clean, buy } = parseBuy(reply);
-        setMessages((m) => [
-          ...m,
-          { id: uid(), role: "assistant", content: clean, buy, time: now() },
-        ]);
+        if (clean) {
+          setMessages((m) => [
+            ...m,
+            { id: uid(), role: "assistant", content: clean, buy, time: now() },
+          ]);
+        }
       }
     } catch {
-      setMessages((m) => [
-        ...m,
-        {
-          id: uid(),
-          role: "assistant",
-          content: "tuve un problema de conexión, intenta de nuevo en un momento.",
-          time: now(),
-        },
-      ]);
+      // silencio absoluto
     } finally {
       setTyping(false);
     }
