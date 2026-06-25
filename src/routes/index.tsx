@@ -110,11 +110,12 @@ function ChatPage() {
     setMessages(next);
     setInput("");
 
-    // Realistic human delay: random wait BEFORE typing indicator appears
-    const preDelay = 1500 + Math.random() * 3500;
+    // Primera vez: espera 7-10s antes de los puntos. Luego 5s escribiendo.
+    const isFirst = messages.length === 0;
+    const preDelay = isFirst ? 7000 + Math.random() * 3000 : 1200 + Math.random() * 2500;
     await new Promise((r) => setTimeout(r, preDelay));
     setTyping(true);
-    const typeDelay = 4000 + Math.random() * 8000;
+    const typeDelay = isFirst ? 5000 : 3500 + Math.random() * 3000;
     await new Promise((r) => setTimeout(r, typeDelay));
 
     try {
