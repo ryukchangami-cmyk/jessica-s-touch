@@ -241,19 +241,27 @@ export const Route = createFileRoute("/api/chat")({
         const { messages } = (await request.json()) as { messages: { role: string; content: string }[] };
         if (!Array.isArray(messages)) return new Response(JSON.stringify({ reply: "" }), { headers: { "Content-Type": "application/json" } });
 
+        // Mantener solo los últimos 20 mensajes para reducir tokens y aguantar mucha concurrencia
+        const trimmed = messages.slice(-20);
+
         try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 25000);
           const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
             headers: {
               Authorization: `Bearer ${key}`,
               "Content-Type": "application/json",
             },
+            signal: controller.signal,
             body: JSON.stringify({
               model: "google/gemini-2.5-flash",
-              messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
-              temperature: 1.0,
+              messages: [{ role: "system", content: SYSTEM_PROMPT }, ...trimmed],
+              temperature: 1.05,
+              max_tokens: 350,
             }),
           });
+          clearTimeout(timeout);
 
           if (!res.ok) {
             return new Response(JSON.stringify({ reply: "" }), { headers: { "Content-Type": "application/json" } });
