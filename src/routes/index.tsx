@@ -67,10 +67,13 @@ function ChatPage() {
   const [showProfile, setShowProfile] = useState(false);
   const [showVerified, setShowVerified] = useState(false);
   const [blockedUntil, setBlockedUntil] = useState<number>(0);
+  const [msgCount, setMsgCount] = useState<number>(0);
   useEffect(() => {
     try {
       const v = Number(localStorage.getItem(BLOCK_KEY) || 0);
       if (v) setBlockedUntil(v);
+      const c = Number(localStorage.getItem(COUNT_KEY) || 0);
+      if (c) setMsgCount(c);
     } catch {}
   }, []);
   const [, force] = useState(0);
