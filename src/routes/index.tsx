@@ -107,13 +107,18 @@ function ChatPage() {
     return `${h}h ${m}m ${s}s`;
   }, [isBlocked, blockedUntil]);
 
+  const limitReached = msgCount >= MAX_MESSAGES;
+
   async function send() {
     const text = input.trim();
-    if (!text || typing || isBlocked) return;
+    if (!text || typing || isBlocked || limitReached) return;
     const userMsg: Msg = { id: uid(), role: "user", content: text, time: now() };
     const next = [...messages, userMsg];
     setMessages(next);
     setInput("");
+    const newCount = msgCount + 1;
+    setMsgCount(newCount);
+    try { localStorage.setItem(COUNT_KEY, String(newCount)); } catch {}
 
     // Primera vez: espera 7-10s antes de los puntos. Luego 5s escribiendo.
     const isFirst = messages.length === 0;
