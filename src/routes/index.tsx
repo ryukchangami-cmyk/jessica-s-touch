@@ -283,8 +283,8 @@ function ChatPage() {
             Chat bloqueado por hacer perder el tiempo. Tiempo restante: {blockRemaining}
           </div>
         ) : (
-          <div className="mx-auto flex max-w-2xl items-end gap-2">
-            <div className="glass flex flex-1 items-end rounded-3xl px-4 py-2">
+          <div className="mx-auto flex max-w-2xl items-end gap-2.5">
+            <div className="glass flex flex-1 items-end rounded-[26px] px-5 py-2.5 shadow-lg">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -296,17 +296,21 @@ function ChatPage() {
                 }}
                 rows={1}
                 placeholder="Mensaje"
-                className="max-h-32 w-full resize-none bg-transparent text-[16px] leading-snug text-foreground placeholder:text-muted-foreground focus:outline-none"
+                className="max-h-32 w-full resize-none bg-transparent text-[16px] leading-snug text-foreground placeholder:text-muted-foreground/80 focus:outline-none"
                 style={{ height: "auto" }}
               />
             </div>
             <button
               onClick={send}
               disabled={!input.trim() || typing}
-              className="bubble-me flex h-10 w-10 shrink-0 items-center justify-center rounded-full disabled:opacity-40 active:scale-95 transition-transform"
+              className="group relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full disabled:opacity-40 active:scale-90 transition-all duration-200"
+              style={{
+                background: "linear-gradient(135deg, oklch(0.78 0.18 250) 0%, oklch(0.6 0.22 270) 50%, oklch(0.55 0.24 290) 100%)",
+                boxShadow: "0 8px 24px oklch(0.55 0.22 270 / 50%), inset 0 1px 0 oklch(1 0 0 / 25%), inset 0 -2px 4px oklch(0 0 0 / 20%)",
+              }}
               aria-label="Enviar"
             >
-              <Send className="h-4 w-4" />
+              <Send className="h-5 w-5 translate-x-[1px] -translate-y-[1px] text-white drop-shadow-sm" strokeWidth={2.5} fill="white" />
             </button>
           </div>
         )}
