@@ -27,6 +27,8 @@ type Msg = {
 
 const STORAGE_KEY = "jh_chat_v1";
 const BLOCK_KEY = "jh_block_until";
+const COUNT_KEY = "jh_msg_count";
+const MAX_MESSAGES = 50;
 const WHATSAPP = "+50492404962";
 
 const now = () =>
